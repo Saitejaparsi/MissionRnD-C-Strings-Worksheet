@@ -18,8 +18,10 @@ NOTES: If there are no common words return NULL.
 #define SIZE 31
 int spaces(char *str);
 int equal(char *str1, char *str2, int a, int b);
+int words(char *str1);
 char ** commonWords(char *str1, char *str2) {
-	char **com, t = 0;
+	char **com;
+	int k,t = 0, count = 0;
 	com= NULL;
 	if (str1 == NULL || str2 == NULL)
 		return NULL;
@@ -30,6 +32,11 @@ char ** commonWords(char *str1, char *str2) {
 	t = spaces(str2);
 	if (t == 0)
 		return NULL;
+	count = words(str1);
+	com = (char **)malloc((31)*count);
+	for (k = 0; k < count; k++)
+		com[k] = (char *)malloc((j - i));
+	com[0][0]= '\0';
 	for (i = j; str1[i];i=j+1)
 	{
 		for (j = i; str1[j] != '\0'&&str1[j] != ' '; j++);
@@ -37,14 +44,23 @@ char ** commonWords(char *str1, char *str2) {
 		if (r == 1)
 		{
 			a++;
-			com = (char **)malloc((j - i));
-			for (b = 0; b <j - i; b++,i++)
+			k = i;
+			for (b = 0; b <j - k; b++,i++)
 				*(*(com+a)+b) = *(str1+i);
 			*(*(com + a) + b) = '\0';
 		}
 	}
-	if (com == NULL)
+	if (com[0][0] == '\0')
 		return NULL;
+	return com;
+}
+int words(char *str1){
+	int i = 0,count=0;
+	for (i = 0; str1[i]; i++){
+		if (str1[i] == ' ' || str1[i] == '\0')
+			count++;
+	}
+	return count;
 }
 int spaces(char *str)
 {
@@ -78,7 +94,6 @@ int equal(char *str1, char *str2, int a, int b)
 	return 0;
 }
 
-//common words case
 
 
 
